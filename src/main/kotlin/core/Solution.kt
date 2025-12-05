@@ -37,19 +37,27 @@ interface Solution<D1, D2> {
         val branch = if (test) "test" else "main"
         val fileName = "${day()}_$part"
         val pathName = "src/$branch/resources/${year()}/$fileName"
-//        val path = javaClass.getResource(pathName)?.path ?: throw IllegalArgumentException("File not found: $fileName")
         return File(pathName).readLines()
     }
 
     fun debug(): String {
         return """
-            name: ${name()}
-            year: ${year()}
-            day:  ${day()}
-            data1: ${data1()}
-            data2: ${data2()}
-            testData1: ${testData1()}
-            testData2: ${testData2()}
+            name:  ${name()}
+            year:  ${year()}
+            day:   ${day()}
+            file1: ${fileStats("1")}
+            file2: ${fileStats("2")}
+            test1: ${fileStats("1", true)}
+            test2: ${fileStats("2", true)}
         """.trimIndent()
+    }
+
+    private fun fileStats(part: String, test: Boolean = false): String {
+        val branch = if (test) "test" else "main"
+        val fileName = "${day()}_1"
+        val pathName = "src/$branch/resources/${year()}/$fileName"
+        val file = File(pathName)
+        if (!file.exists()) return "missing"
+        return "size=${file.length()}"
     }
 }

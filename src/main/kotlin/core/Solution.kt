@@ -7,14 +7,14 @@ interface Solution<D1, D2> {
     fun year(): String = name().substring(1, 5)
     fun day(): String = name().takeLast(2)
 
-    fun data1(input: List<String> = getInput("1")): D1
+    fun data1(): D1
     fun solve1(data: D1 = data1()): String
-    fun testData1(input: List<String> = getInput("1", true)): D1
+    fun testData1(): D1
     fun test1(): String = solve1(testData1())
 
-    fun data2(input: List<String> = getInput("2")): D2
+    fun data2(): D2
     fun solve2(data: D2 = data2()): String
-    fun testData2(input: List<String> = getInput("2", true)): D2
+    fun testData2(): D2
     fun test2(): String = solve2(testData2())
 
     fun solve(part: String): String {
@@ -34,11 +34,16 @@ interface Solution<D1, D2> {
     }
 
     fun getInput(part: String, test: Boolean = false): List<String> {
-        val branch = if (test) "test" else "main"
-        val fileName = "${day()}_$part"
-        val pathName = "src/$branch/resources/${year()}/$fileName"
-        return File(pathName).readLines()
+        return getFile(part, test).readLines()
     }
+
+    fun getRawInput(part: String, test: Boolean = false): String {
+        return getFile(part, test).readText()
+    }
+
+    fun getFile(part: String, test: Boolean = false): File = File(
+        "src/${if (test) "test" else "main"}/resources/${year()}/${day()}_$part"
+    )
 
     fun debug(): String {
         return """

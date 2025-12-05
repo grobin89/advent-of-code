@@ -1,4 +1,4 @@
-package org.example.solution
+package org.example.solution.y2025
 
 import org.example.core.UnifiedSolution
 

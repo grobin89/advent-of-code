@@ -4,6 +4,8 @@ import java.io.File
 
 interface Solution<D1, D2> {
     fun name(): String
+    fun year(): String = name().substring(1, 5)
+    fun day(): String = name().takeLast(2)
 
     fun data1(input: List<String> = getInput("1")): D1
     fun solve1(data: D1 = data1()): String
@@ -32,14 +34,22 @@ interface Solution<D1, D2> {
     }
 
     fun getInput(part: String, test: Boolean = false): List<String> {
-        val testSuffix = if (test) "_test" else ""
-        val fileName = "${name().substring(5)}_$part$testSuffix"
-        val pathName = "/${name().substring(1,5)}/$fileName"
-        val path = javaClass.getResource(pathName)?.path ?: throw IllegalArgumentException("File not found: $fileName")
-        return File(path).readLines()
+        val branch = if (test) "test" else "main"
+        val fileName = "${day()}_$part"
+        val pathName = "src/$branch/resources/${year()}/$fileName"
+//        val path = javaClass.getResource(pathName)?.path ?: throw IllegalArgumentException("File not found: $fileName")
+        return File(pathName).readLines()
     }
 
-    fun stats(): Unit {
-        TODO()
+    fun debug(): String {
+        return """
+            name: ${name()}
+            year: ${year()}
+            day:  ${day()}
+            data1: ${data1()}
+            data2: ${data2()}
+            testData1: ${testData1()}
+            testData2: ${testData2()}
+        """.trimIndent()
     }
 }

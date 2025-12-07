@@ -15,6 +15,7 @@ class Register {
             "S202503" to S202503(),
             "S202504" to S202504(),
             "S202505" to S202505(),
+            "S202506" to S202506(),
         )
 
     fun solution(name: String) = solutions[name] ?: throw IllegalArgumentException("No solution $name")
